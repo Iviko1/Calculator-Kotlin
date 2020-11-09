@@ -31,7 +31,9 @@ class MainActivity : AppCompatActivity() {
             if (result == "0") {
                 result = ""
             }
-
+            if (result == ".") {
+                result = "0."
+            }
 
             resultTextView.text = result + number
 
@@ -50,22 +52,19 @@ class MainActivity : AppCompatActivity() {
             operation = view.text.toString()
 
             resultTextView.text = ""
-
-
         }
 
     }
     fun equalsClick(view: View) {
 
-        val secOperandText: String = resultTextView.text.toString()
+        var secOperandText: String = resultTextView.text.toString()
         var secOperand: Double = 0.0
 
         if (!TextUtils.isEmpty(secOperandText)) {
-
             secOperand = secOperandText.toDouble()
-
         }
         when (operation) {
+
             "+" -> resultTextView.text = (operand + secOperand).toString()
             "-" -> resultTextView.text = (operand - secOperand).toString()
             "*" -> resultTextView.text = (operand * secOperand).toString()
@@ -76,10 +75,12 @@ class MainActivity : AppCompatActivity() {
     }
     fun clearClick(view: View) {
 
-        val operand = 0
-        val operation = ""
+        operand = 0.0
+        operation = ""
         resultTextView.text = ""
-        val secOperand = 0
+        var secOperand = ""
+        var result = ""
+        var secOperandText = ""
 
     }
     fun delClick(view:View) {
@@ -90,6 +91,5 @@ class MainActivity : AppCompatActivity() {
         }else if (text.isEmpty()) {
             resultTextView.text = operand.toString()
         }
-
     }
 }
