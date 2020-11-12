@@ -26,17 +26,19 @@ class MainActivity : AppCompatActivity() {
         if (view is TextView) {
 
             var result: String = resultTextView.text.toString()
-            val number: String = view.text.toString()
+            var number: String = view.text.toString()
 
             if (result == "0") {
                 result = ""
             }
-            if (result == ".") {
-                result = "0."
+            if (number.contains(".") && !resultTextView.text.contains(".")){
+                number = "0."
+            }
+            else {
+                resultTextView.text = number
             }
 
             resultTextView.text = result + number
-
         }
 
     }
@@ -65,10 +67,12 @@ class MainActivity : AppCompatActivity() {
         }
         when (operation) {
 
-            "+" -> resultTextView.text = (operand + secOperand).toString()
-            "-" -> resultTextView.text = (operand - secOperand).toString()
-            "*" -> resultTextView.text = (operand * secOperand).toString()
-            "/" -> resultTextView.text = (operand / secOperand).toString()
+            "+" -> resultTextView.text = (operand + secOperand).toString().removeSuffix(".0")
+            "-" -> resultTextView.text = (operand - secOperand).toString().removeSuffix(".0")
+            "*" -> resultTextView.text = (operand * secOperand).toString().removeSuffix(".0")
+            "/" -> resultTextView.text = (operand / secOperand).toString().removeSuffix(".0")
+            "%" -> resultTextView.text = (secOperand * (operand / 100)).toString().removeSuffix(".0")
+            // 25 % 100 = 25 , 3 % 100 = 3
 
         }
 
@@ -78,9 +82,7 @@ class MainActivity : AppCompatActivity() {
         operand = 0.0
         operation = ""
         resultTextView.text = ""
-        var secOperand = ""
-        var result = ""
-        var secOperandText = ""
+
 
     }
     fun delClick(view:View) {
@@ -89,7 +91,8 @@ class MainActivity : AppCompatActivity() {
         if (text.isNotEmpty()) {
             resultTextView.text = text.dropLast(1)
         }else if (text.isEmpty()) {
-            resultTextView.text = operand.toString()
+            resultTextView.text = "0"
         }
     }
+
 }
