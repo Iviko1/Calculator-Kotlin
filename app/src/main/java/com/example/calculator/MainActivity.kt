@@ -31,12 +31,6 @@ class MainActivity : AppCompatActivity() {
             if (result == "0") {
                 result = ""
             }
-            if (number.contains(".") && !resultTextView.text.contains(".")){
-                number = "0."
-            }
-            else {
-                resultTextView.text = number
-            }
 
             resultTextView.text = result + number
         }
@@ -73,8 +67,10 @@ class MainActivity : AppCompatActivity() {
             "/" -> resultTextView.text = (operand / secOperand).toString().removeSuffix(".0")
             "%" -> resultTextView.text = (secOperand * (operand / 100)).toString().removeSuffix(".0")
             // 25 % 100 = 25 , 3 % 100 = 3
-
         }
+        secOperand = 0.0
+        operand = 0.0
+
 
     }
     fun clearClick(view: View) {
@@ -93,6 +89,15 @@ class MainActivity : AppCompatActivity() {
         }else if (text.isEmpty()) {
             resultTextView.text = "0"
         }
+    }
+    fun dotClick(view: View) {
+
+        if (resultTextView.text.contains(".")){
+            resultTextView.text = resultTextView.text
+        }else {
+            resultTextView.text = resultTextView.text.toString() + "."
+        }
+
     }
 
 }
